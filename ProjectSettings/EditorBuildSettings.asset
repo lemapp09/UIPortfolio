@@ -12,6 +12,39 @@ EditorBuildSettings:
     path: Assets/Scenes/Index.unity
     guid: acddfc4d6f2fb4f7eb156f4661af7157
   - enabled: 1
-    path: Assets/Scenes/main-menu.unity
+    path: Assets/Scenes/SecondaryScenes/main-menu.unity
     guid: 696525a2d1d124d9eae18f2300c6e9e0
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/hud.unity
+    guid: 1dcbd7e189ddf42cd9ea6196402aecc6
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/inventory.unity
+    guid: c2431e71df0c440e882c0c52dc6bc382
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/dialogue.unity
+    guid: 43046f5cc8b7c4ec88eeaec264992dd8
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/in-game-shop.unity
+    guid: 5803ce3f0fe7647198c9c1338d493dec
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/settings.unity
+    guid: 0f62a8956ad8641808cca36a35e47849
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/loading-screen.unity
+    guid: 55ed215cb962a430996bad9ca670ac32
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/achievement.unity
+    guid: 138387570541c419d90608cbf22f1071
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/pause-menu.unity
+    guid: b39dbb00bcba945bab86d7c9883fc4a7
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/tutorial.unity
+    guid: e60df0f27e79444df9edc735093b1b08
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/articles.unity
+    guid: 73d2f9b5305a34793984ef4a0fc79f91
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/contact.unity
+    guid: ff5d885c00837487a88cb079b0e3a5c0
   m_configObjects: {}
