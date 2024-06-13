@@ -18,22 +18,6 @@ namespace LemApperson_UIPortfolio
       private VisualElement[] _cards = new VisualElement[12];
       public float _wiggleAmountX, _wiggleAmountY;
 
-      string[,] _sidebaritems = new string[12, 2]
-      {
-         { "Textures/Icons/main-menu", "Main Menu" },
-         { "Textures/icons/hud", "HUD (Heads-Up Display)" },
-         { "Textures/icons/inventory", "Inventory System" },
-         { "Textures/icons/dialogue", "Dialogue System" },
-         { "Textures/icons/in-game-shop", "In-Game Shop" },
-         { "Textures/icons/settings", "Settings Menu" },
-         { "Textures/icons/loading-screen", "Loading Screen" },
-         { "Textures/icons/achievement", "Achievement System" },
-         { "Textures/icons/pause-menu", "Pause Menu" },
-         { "Textures/icons/tutorial", "Tutorial Overlay" },
-         { "Textures/icons/unity-articles", "Unity Articles" },
-         { "Textures/icons/contact", "Contact" }
-      };
-
       private void OnEnable()
       {
          _menuSettings = AssetDatabase.LoadAssetAtPath<MenuSettings>("Assets/Scripts/Settings/MenuSettings.asset");

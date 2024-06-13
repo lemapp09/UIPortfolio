@@ -47,4 +47,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SecondaryScenes/contact.unity
     guid: ff5d885c00837487a88cb079b0e3a5c0
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu01.unity
+    guid: 5b9e4ac88cff94068b2ecbd28631114e
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu02.unity
+    guid: 75ca927be5e5341dbb206d99629bcca1
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu03.unity
+    guid: 2f87c143064b843738b896c9fdfa4bd7
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu04.unity
+    guid: d0a5a73a7dce547a280eba8a3ffaa12c
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu05.unity
+    guid: 7b33ea6095db343a0a8ffcc55a7fd311
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu06.unity
+    guid: f4cacc6c00d254e008b72f1b5a650f0f
+  - enabled: 1
+    path: Assets/Scenes/SecondaryScenes/MainMenu/main-menu07.unity
+    guid: 3a90a3083726f4620b1d1bca1f922ce7
   m_configObjects: {}

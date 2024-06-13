@@ -65,5 +65,19 @@ namespace LemApperson_UIPortfolio
                 }
             
         }
+
+        public void ToggleAlternativeLabel(VisualElement alternativeLabel, bool isDarkMode)
+        {
+            if (isDarkMode)
+            {
+                alternativeLabel.RemoveFromClassList("card-alternative-label");
+                alternativeLabel.AddToClassList("card-alternative-label-darkMode");
+            }
+            else
+            {
+                alternativeLabel.RemoveFromClassList("card-alternative-label-darkMode");
+                alternativeLabel.AddToClassList("card-alternative-label");
+            }
+        }
     }
 }

@@ -21,22 +21,7 @@ namespace LemApperson_UIPortfolio
             if(_menuSettings == null) Debug.LogError("Menu Settings not found");
             
             var sidebar = new VisualElement();
-            _sidebarItems = new string[13, 3]
-            {
-                { "Textures/Icons/home", "Home", "index" },
-                { "Textures/Icons/main-menu", "Main Menu", "main-menu" },
-                { "Textures/icons/hud", "HUD (Heads-Up Display)", "hud" },
-                { "Textures/icons/inventory", "Inventory System", "inventory" },
-                { "Textures/icons/dialogue", "Dialogue System", "dialogue" },
-                { "Textures/icons/in-game-shop", "In-Game Shop", "in-game-shop" },
-                { "Textures/icons/settings", "Settings Menu", "settings" },
-                { "Textures/icons/loading-screen", "Loading Screen", "loading-screen" },
-                { "Textures/icons/achievement", "Achievement System", "achievement" },
-                { "Textures/icons/pause-menu", "Pause Menu", "pause-menu" },
-                { "Textures/icons/tutorial", "Tutorial Overlay", "tutorial" },
-                { "Textures/icons/unity-articles", "Unity Articles", "articles" },
-                { "Textures/icons/contact", "Contact", "contact" }
-            };
+            _sidebarItems = _menuSettings.GetSidebarItems();
             sidebar.AddToClassList("side-bar");
 
             var header = new Label("<line-height=70%>" + headline + "</line-height>");
@@ -65,6 +50,7 @@ namespace LemApperson_UIPortfolio
                 icon.AddToClassList("side-bar-content-image");
                 icon.style.backgroundImage = Resources.Load<Texture2D>(_sidebarItems[i, 0]);
                 content.Add(icon);
+                
                 var label = new Label(_sidebarItems[i, 1]);
                 label.AddToClassList("side-bar-content-label");
                 label.AddToClassList("wrap");
@@ -76,7 +62,8 @@ namespace LemApperson_UIPortfolio
                 content.RegisterCallback<MouseUpEvent>(evt =>
                 {
                     AudioManager.PlaySFXSound();
-                    SceneManager.LoadScene(sceneName);
+                     SceneManager.LoadScene(sceneName);
+                    // BaseSecondaryPage.BuildSecondaryPage(i);
                 });
                 content.name = _sidebarItems[i, 1];
                 content.Add(label);

@@ -117,13 +117,21 @@
     align-items: center;
 }
 
+.secondary-card {
+    min-height: 511px;
+}
+
 .card:hover {
     background-color: var(--color-4); /* Example hover effect */
 }
 
 .hidden-element {
     flex-direction: column;
-    background-color: var(--color-7);
+    align-items: center;
+     -unity-text-align: middle-center;
+    background-color: white;
+    border-color: var(--color-7);
+    border-width: 2px;
     position: absolute;
     left: -1000px; /* Start off-screen */
     top: -1000px;
@@ -132,17 +140,33 @@
     transform-origin: top left;
 }
 
-.hidden-element-label {
+.hidden-element-image {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+}
+
+.hidden-element-label1 {
     white-space: normal;
-    color: var(--color-1);
+    color: var(--color-7);
     font-size: 32px;
     -unity-font: var(--font-2);
     -unity-font-definition: var(--font-2);
+    margin: 0;
+}
+
+.hidden-element-label2 {
+    white-space: normal;
+    color: var(--color-7);
+    font-size: 20px;
+    -unity-font: var(--font-3);
+    -unity-font-definition: var(--font-3);
+    margin: 10px;
 }
 
 .card:hover .hidden-element {
     left: 0; /* Start off-screen */
-    top: 50%;
+    top: 10%;
     visibility: visible;
     transform-origin: top left;
 }
@@ -188,4 +212,66 @@
 
 .card-text:hover {
     color: var(--color-4);
+}
+
+.card-alternative-label{
+    width: 100%;
+    white-space: normal;
+    color: var(--color-7);
+    font-size: 24px;
+    -unity-font: var(--font-3);
+    -unity-font-definition: var(--font-3);
+    margin: 10px;
+}
+
+.card-alternative-label-darkMode{
+    width: 100%;
+    white-space: normal;
+    color: var(--color-1);
+    font-size: 24px;
+    -unity-font: var(--font-3);
+    -unity-font-definition: var(--font-3);
+    margin: 10px;
+}
+
+.floating-element{
+    margin-top: 10px;
+    font-size: 28px;
+    -unity-font-definition: var(--font-3);
+    -unity-font: var(--font-3);
+    border-color: black;
+    position: absolute;
+    left: 50px; 
+    top: 50px;
+    transform-origin: top left;
+}
+
+.floating-element-darkMode {
+    background-color: var(--color-7);
+    color: white;
+}
+
+.floating-element-lightMode {
+    background-color: var(--color-4);
+    color: black;
+}
+
+.floating-element:hover {
+    color: var(--color-1);
+    background-color: black;
+}
+
+.side-bar-holder{
+    transition: left 0.3s ease;
+    position: absolute;
+    left: -400px;
+    top: 0;
+    transform-origin: top left;
+}
+
+.floating-element:hover .side-bar-holder{
+    visibility: visible;
+    transform-origin: top left;
+    left: 0; 
+    top: 0;
 }
