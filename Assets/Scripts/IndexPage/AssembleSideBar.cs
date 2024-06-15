@@ -8,8 +8,6 @@ namespace LemApperson_UIPortfolio
     public struct AssembleSideBar
     {
         private static MenuSettings _menuSettings;
-        private UIDocument _indexPage;
-        private StyleSheet _indexPageStyle;
         private int _screenWidth;
         private float _numOfColumns;
         private VisualElement _root, _body, _sidebar, _mainContent;
@@ -18,8 +16,8 @@ namespace LemApperson_UIPortfolio
         public static VisualElement SideBarAssembler(bool isMainPage, string headline)
         {
             _menuSettings = AssetDatabase.LoadAssetAtPath<MenuSettings>("Assets/Scripts/Settings/MenuSettings.asset");
-            if(_menuSettings == null) Debug.LogError("Menu Settings not found");
-            
+            if (_menuSettings == null) Debug.LogError("Menu Settings not found");
+
             var sidebar = new VisualElement();
             _sidebarItems = _menuSettings.GetSidebarItems();
             sidebar.AddToClassList("side-bar");
@@ -50,20 +48,25 @@ namespace LemApperson_UIPortfolio
                 icon.AddToClassList("side-bar-content-image");
                 icon.style.backgroundImage = Resources.Load<Texture2D>(_sidebarItems[i, 0]);
                 content.Add(icon);
-                
+
                 var label = new Label(_sidebarItems[i, 1]);
                 label.AddToClassList("side-bar-content-label");
                 label.AddToClassList("wrap");
-                
-                // add clickable response to open scene
-                var sceneName = _sidebarItems[i, 2];
-                
+
+
                 // Play SFX sound when clicked, load scene
+                var i1 = i ;
                 content.RegisterCallback<MouseUpEvent>(evt =>
                 {
                     AudioManager.PlaySFXSound();
-                     SceneManager.LoadScene(sceneName);
-                    // BaseSecondaryPage.BuildSecondaryPage(i);
+                    if (i1 == 0)
+                    {
+                        IndexPageLayout.BuildPage();
+                    }
+                    else
+                    {
+                        BaseSecondaryPage.BuildSecondaryPage(i1);
+                    }
                 });
                 content.name = _sidebarItems[i, 1];
                 content.Add(label);

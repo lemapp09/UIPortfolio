@@ -692,8 +692,6 @@ MonoBehaviour:
   _indexPage: {fileID: 1362155386}
   _indexPageStyle: {fileID: 7433441132597879392, guid: 74b5b7ae9ab914c7d9db7ffadf259529,
     type: 3}
-  _wiggleAmountX: 0
-  _wiggleAmountY: 0
 --- !u!1 &1461322584
 GameObject:
   m_ObjectHideFlags: 0

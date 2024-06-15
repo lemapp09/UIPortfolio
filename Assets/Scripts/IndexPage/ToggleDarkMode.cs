@@ -2,12 +2,10 @@ using UnityEngine.UIElements;
 
 namespace LemApperson_UIPortfolio
 {
-
-    public struct ToggleDarkMode 
+    public struct ToggleDarkMode
     {
         public void ToggleCardElements(VisualElement[] cards, bool isDarkMode)
         {
-
             foreach (var card in cards)
             {
                 if (isDarkMode)
@@ -49,21 +47,20 @@ namespace LemApperson_UIPortfolio
                     }
                 }
             }
-        } 
-        
+        }
+
         public void ToggleMainContent(VisualElement mainContent, bool isDarkMode)
         {
-                if (isDarkMode)
-                {
-                    mainContent.RemoveFromClassList("main-content");
-                    mainContent.AddToClassList("main-content-darkMode");
-                }
-                else
-                {
-                    mainContent.RemoveFromClassList("main-content-darkMode");
-                    mainContent.AddToClassList("main-content");
-                }
-            
+            if (isDarkMode)
+            {
+                mainContent.RemoveFromClassList("main-content");
+                mainContent.AddToClassList("main-content-darkMode");
+            }
+            else
+            {
+                mainContent.RemoveFromClassList("main-content-darkMode");
+                mainContent.AddToClassList("main-content");
+            }
         }
 
         public void ToggleAlternativeLabel(VisualElement alternativeLabel, bool isDarkMode)

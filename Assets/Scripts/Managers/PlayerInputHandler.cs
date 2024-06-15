@@ -4,37 +4,41 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     #region Parameters
-    [Header("Input Action Asset")]
-    [SerializeField] private InputActionAsset _playerControls;
-    
-    [Header("Action Map Name References")]
-    [SerializeField] private string _actionMapName = "Player";
-    
-    [Header("Action NAme References")]
-    [SerializeField] private string _moveActionName = "Move";
+
+    [Header("Input Action Asset")] [SerializeField]
+    private InputActionAsset _playerControls;
+
+    [Header("Action Map Name References")] [SerializeField]
+    private string _actionMapName = "Player";
+
+    [Header("Action NAme References")] [SerializeField]
+    private string _moveActionName = "Move";
+
     [SerializeField] private string _lookActionName = "Look";
     [SerializeField] private string _fireActionName = "Fire";
     [SerializeField] private string _jumpActionName = "Jump";
     [SerializeField] private string _sprintActionName = "Sprint";
-    
+
     [Header("Dead Zone Min")] // Older controllers can be a bit loose, so we can use a deadzone to prevent jittering
-    [SerializeField] private float _deadZoneMin = 0.2f;
-    
+    [SerializeField]
+    private float _deadZoneMin = 0.2f;
+
     private InputAction _moveAction;
     private InputAction _lookAction;
     private InputAction _fireAction;
     private InputAction _jumpAction;
     private InputAction _sprintAction;
-    
+
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
     public bool FireInput { get; private set; }
     public bool JumpInput { get; private set; }
     public float SprintInput { get; private set; }
-    
+
     public static PlayerInputHandler Instance { get; private set; }
+
     #endregion
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -46,14 +50,14 @@ public class PlayerInputHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         _moveAction = _playerControls.FindActionMap(_actionMapName).FindAction(_moveActionName);
         _lookAction = _playerControls.FindActionMap(_actionMapName).FindAction(_lookActionName);
         _fireAction = _playerControls.FindActionMap(_actionMapName).FindAction(_fireActionName);
         _jumpAction = _playerControls.FindActionMap(_actionMapName).FindAction(_jumpActionName);
         _sprintAction = _playerControls.FindActionMap(_actionMapName).FindAction(_sprintActionName);
         RegisterInputActions();
-        
+
         InputSystem.settings.defaultDeadzoneMin = _deadZoneMin;
         // PrintDevices();
     }
@@ -64,7 +68,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             if (device.enabled)
             {
-                Debug.Log("Active Device:"+ device.name);
+                Debug.Log("Active Device:" + device.name);
             }
         }
     }
@@ -98,7 +102,7 @@ public class PlayerInputHandler : MonoBehaviour
                 break;
         }
     }
-    
+
     private void OnEnable()
     {
         _moveAction.Enable();
@@ -106,10 +110,10 @@ public class PlayerInputHandler : MonoBehaviour
         _fireAction.Enable();
         _jumpAction.Enable();
         _sprintAction.Enable();
-        
+
         InputSystem.onDeviceChange += OnDeviceChange;
     }
-    
+
     private void OnDisable()
     {
         _moveAction?.Disable();
@@ -117,7 +121,7 @@ public class PlayerInputHandler : MonoBehaviour
         _fireAction?.Disable();
         _jumpAction?.Disable();
         _sprintAction?.Disable();
-        
+
         InputSystem.onDeviceChange -= OnDeviceChange;
     }
 }

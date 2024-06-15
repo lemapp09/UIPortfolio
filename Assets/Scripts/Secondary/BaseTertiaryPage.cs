@@ -4,72 +4,53 @@ using UnityEditor;
 
 namespace LemApperson_UIPortfolio
 {
-
-    public abstract class BaseTertiaryPage : MonoBehaviour
+    public static class BaseTertiaryPage 
     {
         #region parameters
 
-        [SerializeField] protected UIDocument _indexPage;
-        [SerializeField] protected StyleSheet _indexPageStyle;
-        protected int _numOfColumns;
-        protected VisualElement _root, _body, _sidebar, _tertiaryContent, _alternativeLabel;
-        protected VisualElement[] _tertiaryCards = new VisualElement[8];
-        protected bool _darkMode = true;
-        protected static MenuSettings _menuSettings;
-        protected ToggleDarkMode _toggleDarkMode;
-        protected static string[,] _tertiaryContentItems;
+        private static VisualElement _root;
+        private static MenuSettings _menuSettings;
+        private static UIDocument _indexPage;
+        private static StyleSheet _indexPageStyle;
 
         #endregion
 
-        protected abstract string Headline { get; }
-        protected abstract string[,] tertiaryContentItems { get; }
-
-        private void OnEnable()
+        public static void BuildPage(int exampleId)
         {
-            _tertiaryContentItems = tertiaryContentItems;
+            // begin the root document
             _menuSettings = AssetDatabase.LoadAssetAtPath<MenuSettings>("Assets/Scripts/Settings/MenuSettings.asset");
             if (_menuSettings == null) Debug.LogError("Menu Settings not found");
-            _darkMode = _menuSettings.GetDarkMode();
-            _menuSettings.OnDarkModeChanged += UpdateElementTheme;
-        }
-
-        private void Start()
-        {
-            _numOfColumns = Screen.width / 325;
-            if (_numOfColumns < 2) _numOfColumns = 2;
-
+            _indexPage = _menuSettings.GetIndexPage();
+            _indexPageStyle = _menuSettings.GetIndexPageStyle();
+            if(_indexPage == null) Debug.LogError("Index Page not found");
+            if(_indexPage == null) Debug.LogError("Index Page Style not found");
+            _indexPage.rootVisualElement.Clear();
             _root = _indexPage.rootVisualElement;
-            _root.styleSheets.Add(_indexPageStyle);
             _root.AddToClassList("root");
-            _body = new VisualElement();
-            _body.AddToClassList("body");
-            _root.Add(_body);
+            _root.styleSheets.Add(_indexPageStyle);
 
-            _sidebar = AssembleSideBar.SideBarAssembler(false, Headline);
-            _body.Add(_sidebar);
-            _tertiaryContent = new VisualElement();
-            _tertiaryContent.AddToClassList("main-content");
+            // floating element, above the main content
+            // when click, will show the side bar
+            var _floatingElement = new VisualElement();
+            _floatingElement.AddToClassList("floating-element");
+            _floatingElement.AddToClassList("floating-element");
+            if (_menuSettings.GetDarkMode()) _floatingElement.AddToClassList("floating-element-darkMode");
+            else _floatingElement.AddToClassList("floating-element-lightMode");
+            _floatingElement.RegisterCallback<MouseUpEvent>(evt => { AudioManager.PlaySFXSound(); });
 
-            var buildStuff =
-                AssembleSecondaryContent.MainContentAssembler(_numOfColumns, _darkMode, _tertiaryContentItems);
-            _tertiaryContent = buildStuff.Item1;
-            _tertiaryCards = buildStuff.Item2;
-            _alternativeLabel = buildStuff.Item3;
-            _body.Add(_tertiaryContent);
-            _sidebar.style.width = Length.Percent((1.0f / _numOfColumns) * 100.0f);
-            _tertiaryContent.style.width = Length.Percent((1 - 1.0f / _numOfColumns) * 100.0f);
-        }
+            var _floatingElementText = new Label("Menu");
+            _floatingElementText.name = "floating-element-text";
+            _floatingElement.Add(_floatingElementText);
+            _root.Add(_floatingElement);
 
-        private void UpdateElementTheme(bool darkMode)
-        {
-            _toggleDarkMode.ToggleCardElements(_tertiaryCards, darkMode);
-            _toggleDarkMode.ToggleMainContent(_tertiaryContent, darkMode);
-            _toggleDarkMode.ToggleAlternativeLabel(_alternativeLabel, darkMode);
-        }
-
-        private void OnDisable()
-        {
-            _menuSettings.OnDarkModeChanged -= UpdateElementTheme;
+            // holder for the side bar
+            var _sideBarHolder = new VisualElement();
+            _sideBarHolder.name = "side-bar-holder";
+            _sideBarHolder.AddToClassList("side-bar-holder");
+            var sideBar = AssembleSideBar.SideBarAssembler(false, "Main Menu");
+            sideBar.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
+            _sideBarHolder.Add(sideBar);
+            _floatingElement.Add(_sideBarHolder);
         }
     }
 }

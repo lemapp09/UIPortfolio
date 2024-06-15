@@ -3,16 +3,17 @@ using UnityEngine.Audio;
 
 namespace LemApperson_UIPortfolio
 {
-
     public class AudioManager : MonoBehaviour
     {
         #region Parameters
+
         [SerializeField] private AudioMixer _audioMixer;
         [SerializeField] private AudioSource _sfxSoundSource, _ambient1SoundSource, _ambient2SoundSource;
-        static private AudioSource _sfxSound, _ambient1Sound, _ambient2Sound; 
+        static private AudioSource _sfxSound, _ambient1Sound, _ambient2Sound;
         private AudioMixerGroup _masterGroup, _ambientGroup, _sfxGroup;
         private float _masterVolume, _ambientVolume, _sfxVolume;
         public static AudioManager Instance { get; private set; }
+
         #endregion
 
         private void Awake()
@@ -33,7 +34,7 @@ namespace LemApperson_UIPortfolio
             _sfxSound = _sfxSoundSource;
             _ambient1Sound = _ambient1SoundSource;
             _ambient2Sound = _ambient2SoundSource;
-            
+
             // Set the volumes using the constants
             SetAmbientVolume(0.1f);
             SetMasterVolume(0.8f);
@@ -48,30 +49,32 @@ namespace LemApperson_UIPortfolio
         }
 
         #region Play Sounds
+
         public void PlayAmbient1Sound()
         {
             _ambient1Sound.Play();
         }
-        
+
         public void PlayAmbient2Sound()
         {
             _ambient2Sound.Play();
         }
-        
+
         public static void PlaySFXSound()
         {
             _sfxSound.Play();
         }
+
         #endregion
 
         #region Get & Set Volumes
-        
+
         // Function to set the volume of a specific exposed parameter
         public void SetVolume(string parameterName, float volume)
         {
             _audioMixer.SetFloat(parameterName, Mathf.Log10(volume) * 20);
         }
-        
+
         // Function to get the volume of a specific exposed parameter
         public float GetVolume(string parameterName)
         {
@@ -110,6 +113,7 @@ namespace LemApperson_UIPortfolio
         {
             return GetVolume(AudioMixerConstants.SFXVolume);
         }
+
         #endregion
     }
 }

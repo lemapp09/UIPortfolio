@@ -13,36 +13,37 @@ namespace LemApperson_UIPortfolio
         private int _screenWidth;
         private float _numOfColumns;
         private VisualElement _root, _body, _sidebar, _mainContent;
-        private static string[,] _secondaryContentItems;
         private static VisualElement[] _secondaryCards;
 
-        public static (VisualElement, VisualElement[], VisualElement ) MainContentAssembler(int numberofColumns, 
-            bool darkMode, string[,] _secondaryContentItems)
+        public static (VisualElement, VisualElement[], VisualElement ) MainContentAssembler(int numberofColumns,
+            bool darkMode, string[,] secondaryContentItems)
         {
             _menuSettings = AssetDatabase.LoadAssetAtPath<MenuSettings>("Assets/Scripts/Settings/MenuSettings.asset");
-            if(_menuSettings == null) Debug.LogError("Menu Settings not found");
-            darkMode = _menuSettings.GetDarkMode();
-            
+            if (_menuSettings == null) Debug.LogError("Menu Settings not found");
+            if (secondaryContentItems == null) Debug.LogError("Secondary Content Items not found");
+
             _secondaryCards = new VisualElement[8];
-            
             var secondaryContent = new VisualElement();
-            
-                    
+
             //Prepare Alternative Label
             var alternativeLabel = new Label
             {
                 name = "Alternative Label",
-                text = _secondaryContentItems[0 , 5]
+                text = secondaryContentItems[0, 5]
             };
 
             secondaryContent.name = "secondary-content";
-            if (darkMode) { 
+            if (darkMode)
+            {
                 secondaryContent.AddToClassList("main-content-darkMode");
-                alternativeLabel.AddToClassList("card-alternative-label-darkMode");}
-            else {   
+                alternativeLabel.AddToClassList("card-alternative-label-darkMode");
+            }
+            else
+            {
                 secondaryContent.AddToClassList("main-content");
-                alternativeLabel.AddToClassList("card-alternative-label"); }
-            
+                alternativeLabel.AddToClassList("card-alternative-label");
+            }
+
             int i = 0;
             // There are 8 secondary content items each with a different icon and label
             // The number of rows is 8 / number of Columns
@@ -59,113 +60,84 @@ namespace LemApperson_UIPortfolio
                     var card = new VisualElement();
                     card.AddToClassList("card");
                     card.AddToClassList("secondary-card");
-                    switch (i % 3)
-                    {
-                        case 0:
-                            if (darkMode)
-                            {
-                                card.AddToClassList("card1-darkMode");
-                            }
-                            else
-                            {
-                                card.AddToClassList("card1");
-                            }
-                            break;
-                        case 1:
-                            if (darkMode)
-                            {
-                                card.AddToClassList("card2-darkMode");
-                            }
-                            else
-                            {
-                                card.AddToClassList("card2");
-                            }
-                            break;
-                        case 2:
-                            if (darkMode)
-                            {
-                                card.AddToClassList("card3-darkMode");
-                            }
-                            else
-                            {
-                                card.AddToClassList("card3");
-                            }
-                            break;
-                    }
+                    int cardIndex = i % 3 + 1;
+                    string modeSuffix = darkMode ? "-darkMode" : "";
+                    card.AddToClassList($"card{cardIndex}{modeSuffix}");
 
                     if (l == 0) card.style.marginLeft = 20f;
                     if (l == numberofColumns - 2) card.style.marginRight = 20f;
                     card.style.width = Length.Percent(100f / (numberofColumns - 1f));
-                    card.name = "card" + _secondaryContentItems[i, 3];
+                    card.name = "card" + secondaryContentItems[i, 3];
 
-                    if (_secondaryContentItems[i, 0] != "") // 1st card is blank
+                    if (secondaryContentItems[i, 0] != "") // 1st card is blank
                     {
                         var image = new VisualElement();
-                        
+
                         // add image to card
                         image.AddToClassList("card-image");
-                        image.style.backgroundImage = Resources.Load<Texture2D>(_secondaryContentItems[i, 1]);
+                        image.style.backgroundImage = Resources.Load<Texture2D>(secondaryContentItems[i, 1]);
                         card.Add(image);
-                        
+
                         // add text to card
-                        var text = new Label(_secondaryContentItems[i, 2]);
+                        var text = new Label(secondaryContentItems[i, 2]);
                         text.AddToClassList("card-text");
                         card.Add(text);
-                        
+
                         // add clickable response to open scene
-                        if (_secondaryContentItems[i, 6] != "")
+                        if (secondaryContentItems[i, 6] != "")
                         {
-                            var webLink = _secondaryContentItems[i, 6];
+                            var webLink = secondaryContentItems[i, 6];
                             card.RegisterCallback<MouseUpEvent>(evt =>
                             {
                                 AudioManager.PlaySFXSound();
                                 Application.OpenURL(webLink);
                             });
                         }
-                        else if (_secondaryContentItems[i, 3] != "")
+                        else if (secondaryContentItems[i, 3] != "")
                         {
-                            var sceneName = _secondaryContentItems[i, 3];
-                            card.RegisterCallback<MouseUpEvent>(evt =>
-                            {
-                            AudioManager.PlaySFXSound();
-                            SceneManager.LoadScene(sceneName);
-                            });
-                        } 
-                        else {
+                            var sceneName = secondaryContentItems[i, 3];
+                            var i1 = i;
                             card.RegisterCallback<MouseUpEvent>(evt =>
                             {
                                 AudioManager.PlaySFXSound();
+                                BaseTertiaryPage.BuildPage(i1);
                             });
                         }
-                        
-#region Tooltip Hidden Element
+                        else
+                        {
+                            card.RegisterCallback<MouseUpEvent>(evt => { AudioManager.PlaySFXSound(); });
+                        }
+
+                        #region Tooltip Hidden Element
+
                         // add hidden element to store the text for the tooltip
                         VisualElement hiddenElement = new VisualElement();
                         hiddenElement.AddToClassList("hidden-element");
-                        hiddenElement.name = "hiddenElement" + _secondaryContentItems[i, 3];
+                        hiddenElement.name = "hiddenElement" + secondaryContentItems[i, 3];
                         hiddenElement.style.width = Length.Percent(100);
 
                         // resources icons/main-menu.png
                         var icon = new VisualElement();
                         icon.AddToClassList("hidden-element-image");
-                        icon.style.backgroundImage = Resources.Load<Texture2D>(_secondaryContentItems[i , 4]);
+                        icon.style.backgroundImage = Resources.Load<Texture2D>(secondaryContentItems[i, 4]);
                         hiddenElement.Add(icon);
 
                         Label hiddenElementLabel1 = new Label();
                         hiddenElementLabel1.AddToClassList("hidden-element-label1");
-                        hiddenElementLabel1.text = _secondaryContentItems[i , 2];
+                        hiddenElementLabel1.text = secondaryContentItems[i, 2];
                         hiddenElement.Add(hiddenElementLabel1);
 
                         Label hiddenElementLabel2 = new Label();
                         hiddenElementLabel2.AddToClassList("hidden-element-label2");
-                        hiddenElementLabel2.text = _secondaryContentItems[i , 5];
+                        hiddenElementLabel2.text = secondaryContentItems[i, 5];
                         hiddenElement.Add(hiddenElementLabel2);
 
                         card.Add(hiddenElement);
-#endregion
+
+                        #endregion
                     }
-                    
-                    if( i == 0)
+
+                    if (i == 0)
                     {
                         card.Add(alternativeLabel);
                     }
@@ -174,8 +146,10 @@ namespace LemApperson_UIPortfolio
                     _secondaryCards[i] = card;
                     i++;
                 }
+
                 secondaryContent.Add(row);
             }
+
             return (secondaryContent, _secondaryCards, alternativeLabel);
         }
     }
