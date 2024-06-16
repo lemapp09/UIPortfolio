@@ -86,26 +86,44 @@ namespace LemApperson_UIPortfolio
                         // add clickable response to open scene
                         if (secondaryContentItems[i, 6] != "")
                         {
-                            var webLink = secondaryContentItems[i, 6];
-                            card.RegisterCallback<MouseUpEvent>(evt =>
+                            var webLink = secondaryContentItems[i, 6];// Define the event handler
+                            EventCallback<MouseUpEvent> mouseUpEventHandler = evt =>
                             {
                                 AudioManager.PlaySFXSound();
                                 Application.OpenURL(webLink);
-                            });
+                            };
+                            card.RegisterCallback(mouseUpEventHandler);
+                            MouseEventManager.Instance.RegisterEvent(card, mouseUpEventHandler);
                         }
                         else if (secondaryContentItems[i, 3] != "")
                         {
                             var sceneName = secondaryContentItems[i, 3];
-                            var i1 = i;
-                            card.RegisterCallback<MouseUpEvent>(evt =>
+                            var i1 = i;// Define the event handler
+                            EventCallback<MouseUpEvent> mouseUpEventHandler = evt =>
                             {
                                 AudioManager.PlaySFXSound();
-                                BaseTertiaryPage.BuildPage(i1);
-                            });
+                                BaseTertiaryPage.BuildPage(sceneName);
+                            };
+
+                            // Register the event handler with the card element
+                            card.RegisterCallback(mouseUpEventHandler);
+
+                            // Register the event handler with the event manager
+                            MouseEventManager.Instance.RegisterEvent(card, mouseUpEventHandler);
                         }
                         else
                         {
-                            card.RegisterCallback<MouseUpEvent>(evt => { AudioManager.PlaySFXSound(); });
+                            
+                            EventCallback<MouseUpEvent> mouseUpEventHandler = evt =>
+                            {
+                                AudioManager.PlaySFXSound();
+                            };
+
+                            // Register the event handler with the card element
+                            card.RegisterCallback(mouseUpEventHandler);
+
+                            // Register the event handler with the event manager
+                            MouseEventManager.Instance.RegisterEvent(card, mouseUpEventHandler);
                         }
 
                         #region Tooltip Hidden Element

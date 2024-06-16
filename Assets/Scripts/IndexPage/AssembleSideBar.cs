@@ -55,8 +55,8 @@ namespace LemApperson_UIPortfolio
 
 
                 // Play SFX sound when clicked, load scene
-                var i1 = i ;
-                content.RegisterCallback<MouseUpEvent>(evt =>
+                var i1 = i ;// Define the event handler
+                EventCallback<MouseUpEvent> mouseUpEventHandler = evt =>
                 {
                     AudioManager.PlaySFXSound();
                     if (i1 == 0)
@@ -67,7 +67,13 @@ namespace LemApperson_UIPortfolio
                     {
                         BaseSecondaryPage.BuildSecondaryPage(i1);
                     }
-                });
+                };
+
+                // Register the event handler with the card element
+                content.RegisterCallback(mouseUpEventHandler);
+                // Register the event handler with the EventManager
+                MouseEventManager.Instance.RegisterEvent(content, mouseUpEventHandler);
+
                 content.name = _sidebarItems[i, 1];
                 content.Add(label);
                 sidebar.Add(content);

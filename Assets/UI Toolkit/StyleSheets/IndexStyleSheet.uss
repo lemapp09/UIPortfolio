@@ -108,14 +108,12 @@
 }
 
 .card {
+    /* For GlassMorphism, background needs blur */
     flex-direction: column;
     min-height: 341px;
     border-radius: 16px;
     padding: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 10px;
     border-color: var(--color-2);
     border-width: 1px;
     position: relative;

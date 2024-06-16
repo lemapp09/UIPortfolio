@@ -48,6 +48,10 @@ namespace LemApperson_UIPortfolio
             if(_indexPage == null) Debug.LogError("Index Page not found");
             if(_indexPage == null) Debug.LogError("Index Page Style not found");
 
+            // Unregister all events
+            MouseEventManager.Instance.UnregisterAllEvents();
+
+            // Clear all visual elements from the root
             _indexPage.rootVisualElement.Clear();
             _root = _indexPage.rootVisualElement;
             _root.styleSheets.Add(_indexPageStyle);

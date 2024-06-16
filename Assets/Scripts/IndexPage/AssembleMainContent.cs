@@ -58,14 +58,19 @@ namespace LemApperson_UIPortfolio
                     card.name = "card" + _contentItems[i, 3];
                     // add clickable response to open scene
                     var sceneName = _contentItems[i, 3];
-                    int i1 = 1;
-                    card.RegisterCallback<MouseUpEvent>(evt =>
+                    int i1 = i + 1;
+                    EventCallback<MouseUpEvent> mouseUpEventHandler = evt =>
                     {
                         AudioManager.PlaySFXSound();
-                        // SceneManager.LoadScene(sceneName);
                         BaseSecondaryPage.BuildSecondaryPage(i1);
-                    });
+                    };
 
+                    // Register the event handler with the card element
+                    card.RegisterCallback(mouseUpEventHandler);
+
+                    // Register the event handler with the EventManager
+                    MouseEventManager.Instance.RegisterEvent(card, mouseUpEventHandler);
+                    
                     // add hidden element to store the text for the tooltip
                     VisualElement hiddenElement = new VisualElement();
                     hiddenElement.AddToClassList("hidden-element");

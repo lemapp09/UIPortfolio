@@ -20,7 +20,7 @@ namespace LemApperson_UIPortfolio
         private static VisualElement[] _secondaryCards = new VisualElement[8];
         private static bool _darkMode = true;
         private static MenuSettings _menuSettings;
-        private ToggleDarkMode _toggleDarkMode;
+        private static ToggleDarkMode _toggleDarkMode;
 
         #endregion
 
@@ -30,7 +30,6 @@ namespace LemApperson_UIPortfolio
             _menuSettings = AssetDatabase.LoadAssetAtPath<MenuSettings>("Assets/Scripts/Settings/MenuSettings.asset");
             if (_menuSettings == null) Debug.LogError("Menu Settings not found");
             _darkMode = _menuSettings.GetDarkMode();
-            _menuSettings.OnDarkModeChanged += UpdateElementTheme;
         }
 
 
@@ -42,9 +41,14 @@ namespace LemApperson_UIPortfolio
             if(_indexPage == null) Debug.LogError("Index Page not found");
             _indexPageStyle = _menuSettings.GetIndexPageStyle();
             if(_indexPageStyle == null) Debug.LogError("Index Page Style not found");
+            _menuSettings.OnDarkModeChanged += UpdateElementTheme;
             _numOfColumns = Screen.width / 325;
             if (_numOfColumns < 2) _numOfColumns = 2;
 
+            // Unregister all events
+            MouseEventManager.Instance.UnregisterAllEvents();
+
+            // Clear all visual elements from the root
             _indexPage.rootVisualElement.Clear();
             _root = _indexPage.rootVisualElement;
             _root.styleSheets.Add(_indexPageStyle);
@@ -86,7 +90,7 @@ namespace LemApperson_UIPortfolio
             FadePanel.schedule.Execute(() => FadePanel.RemoveFromHierarchy()).StartingIn(1100);
         }
 
-        private void UpdateElementTheme(bool darkMode)
+        private static void UpdateElementTheme(bool darkMode)
         {
             _toggleDarkMode.ToggleCardElements(_secondaryCards, darkMode);
             _toggleDarkMode.ToggleMainContent(_secondaryContent, darkMode);
